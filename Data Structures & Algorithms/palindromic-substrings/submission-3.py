@@ -1,0 +1,21 @@
+from functools import cache
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+
+        @cache
+        def is_palindrome(l: int, r: int) -> bool:
+            if l >= r:
+                return True
+
+            return s[l] == s[r] and is_palindrome(l + 1, r - 1)
+
+        count = 0
+
+        for l in range(n):
+            for r in range(l, n):
+                if is_palindrome(l, r):
+                    count += 1
+
+        return count
